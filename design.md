@@ -1,5 +1,7 @@
 # Design of CatDB
 
+We use big-end for encoding.
+
 ## API
 ```go
 //open a CatDb,if filePath doesn't exist it will creat one CatDB with the given filePath
@@ -16,12 +18,15 @@ func (db *DB) Delete(key string)(bool , error)
 ```
 
 ## Block
-Block represent a disk page which usually is 4096 bytes.
+Block represents a disk page which usually is 4096 bytes.
 It needs to be converted into Node in order to do CRUD operation.
 
 ## Node
 Node represents a memory node which provides Btree operations.It
 needs to be converted into Block when store to disk.
+
+## KVPair
+A
 
 ## ConvertServer
 ConvertServer provide the ability to convert a memory node into
