@@ -13,9 +13,9 @@ type KVPair struct {
 	Value    string //90
 }
 
-const maxPairSize = 124
-const maxKey = 30
-const maxValue = 30
+const MAXPAIRSIZE = 124
+const MAXKEYSIZE = 30
+const MAXVALUESIZE = 30
 
 func (pair *KVPair) SetKey(key string) error {
 	if len(key) > 30 {
@@ -65,17 +65,20 @@ func convertFromBytesToPair(bytes []byte) *KVPair {
 }
 
 func converFromPairToBytes(pair *KVPair) []byte {
-	offset := uint16(0)
-	bytes := make([]byte, maxPairSize)
+	offset := 0
+	bytes := make([]byte, MAXPAIRSIZE)
+
 	copy(bytes[offset:], uint16ToBytes(pair.Keylen))
 	offset += 2
 	copy(bytes[offset:], uint16ToBytes(pair.Valuelen))
 	offset += 2
+
 	copy(bytes[offset:], []byte(pair.Key))
-	offset += pair.Keylen
+	offset += int(pair.Keylen)
+
 	copy(bytes[offset:], []byte(pair.Value))
-	offset += pair.Valuelen
-	return nil
+	offset += int(pair.Valuelen)
+	return bytes
 }
 
 func uint16ToBytes(len uint16) []byte {
